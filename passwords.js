@@ -1,7 +1,7 @@
 function passwords(n) {
     const str = '@#$ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     var passes = Array();
-    for (let i = 0; i < n; i++) {
+    for (let i = 1; i <= n; i++) {
         let pass = '';
         for (let j = 1; j <= 8; j++) {
             var char = Math.floor(Math.random() * str.length + 1);

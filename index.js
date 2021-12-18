@@ -1,27 +1,22 @@
-const http = require("http");
-const { passwords } = require("./passwords");
+const express = require("express"),
+    cors = require("cors"),
+    app = express(),
+    { passwords } = require("./passwords");
 
-const server = http.createServer(async function (req, res) {
-    // set the request route
-    if (req.url === "/" && req.method === "GET") {
-        // response headers
-        res.writeHead(200, { "Content-Type": "application/json" });
-        // esponse
-        const passes = passwords(20);
-        res.end(JSON.stringify({ data: passes, timestamp: Date.now().toString() }));
-    }
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-    // if no route present
-    else {
-        res.writeHead(404, { "Content-Type": "application/json" });
-        res.end(JSON.stringify({ message: "Route not found" }));
+app.use("/", (req, res) => {
+    try {
+        const passes = passwords(50);
+        res.send({ data: passes, timestamp: Date.now().toString() });
+    } catch (error) {
+        res.send({ error: error });
     }
 });
 
 // port setup
-
-const PORT = process.env.PORT || 5000;
-
-server.listen(PORT, () => {
-    console.log(`Gracefully generating passwords on ${PORT}`);
+app.listen(process.env.PORT || 5000, () => {
+    console.log("Server running on 5000");
 });
