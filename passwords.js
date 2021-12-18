@@ -7,7 +7,7 @@ function passwords(n) {
             var char = Math.floor(Math.random() * str.length + 1);
             pass += str.charAt(char)
         }
-        passes.push({ id: i, password: pass });
+        passes.push({ id: i, name: pass });
     }
     passes.sort((a, b) => String(a.password).localeCompare(b.password));
     return passes;
